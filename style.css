@@ -1,0 +1,407 @@
+.apply-page {
+    background-color: #EDF0F2;
+}
+
+.apply-page label.required::after {
+    content: '\f069';
+    font-family: FontAwesome;
+    font-size: .3em;
+    position: relative;
+    vertical-align: super;
+    padding-left: 3px;
+    color: #dd2c2c;
+}
+
+.apply-sidebar {
+    line-height: 1.95em;
+}
+
+.apply-sidebar h3 {
+    font-size: 1.15em;
+    margin-bottom: 20px;
+}
+
+.select-discovery-channel {
+    width: auto;
+    display: inline-block;
+}
+
+.apply-page {
+    background: #FFF;
+    border-radius: 4px;
+    border: 1px solid #E5EBEF;
+    padding: 20px;
+    font-family: "Raleway", serif;
+    font-size: 1.125em;
+}
+
+.apply-page input[type="email"],
+.apply-page input[type="password"],
+.apply-page input[type="text"],
+.apply-page input[type="file"],
+.apply-page input[type="tel"],
+.apply-page textarea {
+    background-color: #EDF0F2;
+    border: 2px solid #E5EBEF;
+    width: 100%;
+    border-radius: 4px;
+    margin: 5px 0;
+    padding: 10px 20px;
+    color: #202F37;
+    font-size: .95em;
+    line-height: 1.95em;
+    -webkit-appearance: none;
+    line-height: initial;
+}
+
+.apply-page input[type="email"]:focus,
+.apply-page input[type="password"]:focus,
+.apply-page input[type="text"]:focus,
+.apply-page input[type="file"]:focus,
+.apply-page input[type="tel"]:focus,
+.apply-page textarea:focus {
+    border: 2px solid #E5EBEF;
+    background-color: #FFF;
+    outline: none;
+}
+
+.apply-page .apply-section {
+    margin-bottom: 1.5em;
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid #E5EBEF;
+}
+
+.apply-page .apply-section .h4 {
+    margin-bottom: 15px;
+    font-size: 1.275em;
+    font-weight: bold;
+}
+
+.apply-page .apply-section label {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.apply-page .form-group {
+    margin-bottom: 15px;
+}
+
+.notification {
+	position: absolute;
+	font-family: arial;
+	font-size: small;
+	color: #fff;
+	background: #20b2aa;
+	width: 300px;
+}
+
+.notification.show {
+	transition: all 1s linear;
+	display: block;
+	right: 10px;
+	top: 10px;
+	padding: 0.7em;
+	z-index: 99999999999999;
+}
+
+.notification.error {
+	background-color: #ff6347;
+}
+
+.notification.success {
+	background-color: #41b51d;
+}
+
+.notification.info {
+	background-color: #6495ed;
+}
+
+.notification.warn {
+	background-color: #b55d1d;
+}
+
+.notification a {
+	float: right;
+	margin-right: 5px;
+	color: #fff;
+}
+
+.notification .red {
+	background-color: #ff6347;
+}
+
+.center-component, .slide-enter-to, .slide-leave {
+    transition-property: all;
+    transition-duration: 350ms;
+    transition-timing-function: ease-out;
+    transform: translateX(0vw) scale(1);
+    opacity: 1;
+    float: right;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .slide-enter {
+    transition-property: all;
+    transition-duration: 350ms;
+    transition-timing-function: ease-out;
+    opacity: 0;
+    transform: translateX(50vw) scale(0);
+  }
+  
+  .slide-enter-to {
+    transition-delay: 350ms;
+  }
+  
+  .slide-leave-to {
+    transition-property: all;
+    transition-duration: 350ms;
+    transition-timing-function: ease-in;
+    transform: translateX(-50vw) scale(0);
+    opacity: 0;
+  }
+  
+  .spin {
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 2000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: 2000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: 2000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  .spin-forward {
+    -webkit-animation-name: spin-forward;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin-forward;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin-forward;
+    -ms-animation-duration: 1000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    animation-name: spin-forward;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  .slide-down {
+    overflow: hidden;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+  
+  .slide-down.open {
+    transition: .3s ease-in;
+    overflow: hidden;
+    max-height: 100vh;
+  }
+  
+  @-moz-keyframes spin {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(-360deg);
+    }
+  }
+  
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(-360deg);
+    }
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  @-moz-keyframes spin-forward {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes spin-forward {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin-forward {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .component-fade-enter-active,
+  .component-fade-leave-active {
+      transition: all 0.5s ease;
+  }
+  
+  .component-fade-enter,
+  .component-fade-leave-to {
+      opacity: 0;
+  }
+  
+  .list-complete-item {
+      transition: all linear 1s;
+      display: inline-block;
+      margin-right: 10px;
+  }
+  
+  .list-complete-enter,
+  .list-complete-leave-to {
+      opacity: 0;
+  }
+  
+  .list-complete-leave-active {
+      position: absolute;
+  }
+  
+  .list-inline li {
+      display: inline-flex;
+      color: white !important;
+      font-size: larger;
+  }
+  .text-white{
+      color: white !important;
+  }
+
+  .icon-bar {
+    border-top: 1px solid #0072BC;
+    color: #0072BC
+}
+
+.icon-bar .circle {
+    border: 1px solid #0072BC;
+    padding: 5px;
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    margin-top: -20px
+}
+
+.icon-bar .circle .inner-circle {
+    border-radius: 100%;
+    height: 28px;
+    width: 28px;
+    background-color: #0072BC
+}
+
+.icon-bar .content {
+    margin-top: 8px
+}
+
+.dd_wrap {
+    z-index: 99999999999!important
+}
+
+.mt-5 {
+    margin-top: .5em
+}
+
+.mt-10 {
+    margin-top: 1em
+}
+
+.mt-15 {
+    margin-top: 1.5em
+}
+
+.mt-20 {
+    margin-top: 2em
+}
+
+.mt-25 {
+    margin-top: 2.5em
+}
+
+.mt-30 {
+    margin-top: 3em
+}
+
+body.background-white,body.background-white .wrapper>section {
+    background-color: #fff
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src:    url('fonts/icomoon.eot');
+    src:    url('fonts/icomoon.eot') format('embedded-opentype'),
+        url('fonts/icomoon.ttf') format('truetype'),
+        url('fonts/icomoon.woff') format('woff'),
+        url('fonts/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bcw-logo:before {
+    content: "\e900";
+}
+.icon-bcw-logo-colors .path1:before {
+    content: "\e901";
+    color: #0072bc;
+}
+.icon-bcw-logo-colors .path2:before {
+    content: "\e902";
+    margin-left: -1.03515625em;
+    color: #0072bc;
+}
+.icon-bcw-logo-colors .path3:before {
+    content: "\e903";
+    margin-left: -1.03515625em;
+    color: #8dc63f;
+}

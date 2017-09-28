@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CodeWorks Application Process</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="codeworks.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <article class="apply-page" id="signup">
+        <transition-group name="list-complete" tag="div">
+            <div class="notification show" v-for="(notification, i) in notifications" :key="i" :class="{'red darken-1': notification.type == 'Error'}"
+                :style="{top: (i * 10)+'em'}"><a @click="clear(notification)"><i class="material-icons right">close</i></a>
+                <h5 class="text-white">{{notification.type || 'Alert'}}: {{notification.title ? notification.title : notification.code}}</h5>
+                <hr/>
+                <p class="text-white">{{notification.message}}</p>
+            </div>
+        </transition-group>
+
+        <div class="container-fluid content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-center color-blue">CodeWorks Application Process</h1>
+                    <img src="application-process.png" alt="Application process" class="img-responsive">
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                <header class="enroll-header m-tb-1" v-show="app.step != 2">
+                    <h1 class="color-blue">Getting Started at CodeWorks</h1>
+                    <p>
+                        Start your next adventure by filling out this form. You likely have some questions that we will address in our conversations
+                        with you. After completing the form we will call you to talk about your goals of becoming a developer
+                        to ensure you start off on the best path.
+                    </p>
+                </header>
+                <div class="row">
+                    <form id="apply-begin" novalidate="novalidate" v-show="app.step === 0" @submit.prevent="begin">
+                        <div class="col-sm-12">
+                            <h2 class="color-grey">Pick a Login Method</h2>
+                            <p><small>Don't worry we will never post content for you</small></p>
+                            <section id="login-social-buttons" class="row">
+                                <div class="col-sm-4">
+                                    <a class="btn-u btn-u-red btn-block" @click="login('google')">
+                                            <span class="fa fa-google"></span> Sign in with Google
+                                        </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a class="btn-u btn-u-dark-blue btn-block col-sm-4" @click="login('facebook')">
+                                        <span class="fa fa-facebook"></span> Sign in with Facebook
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a class="btn-u btn-u-dark-orange btn-block col-sm-4" @click="showEmail = true">
+                                    <span class="fa fa-envelope-o"></span> Sign in with Email
+                                </a>
+                                </div>
+                                <div class="apply-section email-registration" v-show="showEmail">
+                                    <div class="form-group">
+                                        <label for="firstName" class="required">Name:</label>
+                                        <input id="name" type="text" v-model="app.name" required="required" class="required" />
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" class="required">Email</label>
+                                        <input id="email" type="email" v-model="app.email" required="required" class="required" />
+                                        <label for="password" class="required">Password</label>
+                                        <input id="password" type="password" v-model="app.password" required="required" class="required" />
+                                        <div class="help-block with-errors"></div>
+                                        <input type="submit" name="apply-submit" value="Register" class="btn btn-primary btn-lg" />
+                                        <input type="button" value="Login" class="btn btn-primary btn-lg" @click="login" />
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </form>
+                </div>
+                <form id="apply-form" novalidate="novalidate" v-show="app.step == 1" @submit.prevent="submit">
+                    <h1 class="color-grey">Hello {{app.name}},</h1>
+                    <div class="apply-section">
+                        <label for="course" class="required h4">Which course(s) are you interested in?</label>
+                        <div class="form-group">
+                            <input id="course" type="text" required="required" style="display:none" data-error="Please select an item." v-model="app.courses[0]"
+                            />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <p>Select the course, or courses, you are interested in. You may select more than one. If you're not
+                            sure which course is the best for you, that's okay.</p>
+                        <div class="form-group">
+                            <span class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="fullstack" v-model="app.courses" /><span>Full-Stack Immersive</span>
+                            </label>
+                            </span><span class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="webdev" v-model="app.courses" /><span>Web Foundations After Hours</span>
+                            </label>
+                            </span><span class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="dotnet" v-model="app.courses" /><span>Back End .NET C#</span>
+                            </label>
+                            </span><span class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="mobile" v-model="app.courses" /><span>Mobile Development</span>
+                            </label>
+                            </span><span class="checkbox">
+                                <label>
+                                        <input type="checkbox" value="game" v-model="app.courses" /><span>Game Development with Unity</span>
+                            </label>
+                            </span><span class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="unsure" v-model="app.courses" /><span>I'm Not Sure Yet</span>
+                            </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="apply-section">
+                        <label class="required h4">How did you hear about CodeWorks?</label>
+                        <div class="form-group">
+                            <div class="help-block with-errors"></div>
+                            <select v-model="app.channel" required="required" class="form-control select-discovery-channel">
+                                        <option value="">--Please Select One--</option>
+                                        <option v-for="channel in discoveryChannels" v-bind:value="channel">{{channel}}</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                        </div>
+                        <div v-show="app.channel == 'Other'" class="form-group">
+                            <label for="channel">Other</label>
+                            <input type="text" v-model="app.otherChannel" />
+                        </div>
+                    </div>
+                    <div class="apply-section">
+                        <div class="h4">Tell us more about yourself:</div>
+                        <div class="form-group">
+                            <label for="about" class="required">Tell us about yourself and your educational background.</label>
+                            <div class="help-block with-errors"></div>
+                            <textarea id="about" type="text" rows="7" required="required" v-model="app.about"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="goals" class="required">Tell us your goals... why do you want to attend CodeWorks?</label>
+                            <div class="help-block with-errors"></div>
+                            <textarea id="goals" type="text" rows="7" required="required" v-model="app.goals"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Are you intersted in applying for a scholarship?</label>
+                            <div class="help-block">We offer a variety of scholarships...</div>
+                            <label class="radio-inline"><input type="radio" name="scholarship" value="yes" v-model="app.scholarship" />Yes</label>
+                            <label class="radio-inline"><input type="radio" name="scholarship" value="no" v-model="app.scholarship" />No</label>
+                        </div>
+                    </div>
+                    <div class="apply-section">
+                        <div class="h4">Contact Information:</div>
+                        <div class="form-group">
+                            <label id="one" for="one" class="required">Phone</label>
+                            <input type="tel" v-model="app.phone" required="required" class="required" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="apply-section">
+                        <div class="h4">Any questions for us?</div>
+                        <div class="form-group">
+                            <textarea id="questions" type="text" rows="4" v-model="app.questions" class="required"></textarea>
+                        </div>
+                    </div>
+                    <div class="apply-submit">
+                        <input type="submit" value="Submit Application" class="btn btn-primary btn-lg" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <section v-show="app.step == 2">
+            <!-- VIEWS -->
+            <div class="next-steps" v-if="activeView == 'next-steps'">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <h3 class="color-blue text-center">Next steps to get ready for boot-camp.</h3>
+                        <p class="text-center text-muted"><small>"Develop your future!"</small></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <hr>
+                        <div class="col-sm-6 col-lg-6 mt-xl">
+                            <div class="media">
+                                <div class="media-left text-primary"><i class="media-object fa fa-user fa-2x fa-fw"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-primary media-heading">User Profile</h4>
+                                    <p>Here you can review your user information
+                                    </p>
+                                    <button class="btn btn-u btn-lg" @click="edit"><i class="fa fa-pencil"></i> Edit Profile</button>
+                                    <button type="button" class="btn btn-u btn-u-yellow btn-lg" @click="logout" v-if="app.uid"><i class="fa fa-sign-out"></i>Logout</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 mt-xl">
+                            <div class="media">
+                                <div class="media-left text-primary"><i class="media-object fa fa-phone fa-2x fa-fw"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-primary media-heading">Have a Question</h4>
+                                    <p>Give us a quick, informal phone call
+                                        <b>&nbsp;(208) 391-5162&nbsp;</b>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <hr>
+                        <div class="col-sm-6 col-lg-6 mt-xl">
+                            <div class="media">
+                                <div class="media-left text-primary"><i class="media-object fa fa-code fa-2x fa-fw"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-primary media-heading">Show Us Your Passion</h4>
+                                    <p>Choose from a list of code challenges to complete and share your results with us.
+                                    </p><a @click="activeView='code-challenges'" class="btn btn-u btn-lg">View Challenges</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 mt-xl">
+                            <div class="media">
+                                <div class="media-left text-primary"><i class="media-object fa fa-file-text-o fa-2x fa-fw"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-primary media-heading">Pre-Course Assessment</h4>
+                                    <p>Take our online assessment to help us get an idea of where you stand at the beginning
+                                        of this course. You must score at least a 70% to pass</p>
+                                    <button v-if="app.gritScore >= 70" class="btn btn-u btn-lg"><em class="fa fa-check-circle fa-lg">&nbsp;</em><span>Passed: {{app.gritScore}}%</span>
+                                    </button>
+                                    <button v-else class="btn btn-u btn-u-red btn-lg" @click="activeView = 'grit-test'"><em class="fa fa-exclamation-triangle fa-lg">&nbsp;</em><span>Start Assessment</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-6 mt-xl">
+                                <div class="media">
+                                    <div class="media-left text-primary"><i class="media-object fa fa-usd fa-2x fa-fw"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="text-primary media-heading">Save on Tuition</h4>
+                                        <p>All students are also eligible to apply for on of our Scholarship Programs
+                                        </p>
+                                        <a href="https://boisecodeworks.com/scholarships" target="_blank" class="btn btn-u btn-lg">View Scholarships</a>
+                                        <a href="https://freecodecamp.com" target="_blank" class="btn-u btn btn-u-dark-orange btn-lg">Get Started</a>
+                                        <!-- <a href="https://freecodecamp.com" target="_blank" class="btn-u btn btn-u-purple btn-lg">View Loan Options</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6 mt-xl">
+                                <div class="media">
+                                    <div class="media-left text-primary">
+                                        <img src="cw-logo-blue.png" alt="logo" class="media-object" height="50">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="text-primary media-heading">In-Person Interview &amp; Campus Tour</h4>
+                                        <p>Schedule an interview. We want to meet you!
+                                            <b>&nbsp;(208) 391-5162&nbsp;</b>
+                                        </p>
+                                        <button v-show="app.interviewed" class="btn btn-u btn-lg"><em class="fa fa-check-circle fa-lg">&nbsp;</em><span>Completed</span></button>
+                                        <button v-show="!app.interviewed" class="btn btn-u-red btn-u btn-lg"><em class="fa fa-exclamation-triangle fa-lg no-select">&nbsp;</em><span>Call to Schedule</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div style="background: #DBECF9; padding: 20px;" class="media">
+                                <div class="media-body text-center">
+                                    <h4 style="color: #0072BC;" v-show="!app.accepted"><i class="fa fa-circle-o fa-lg"></i>
+                                        <span style="color: #1D3360;">Acceptance Pending</span>
+                                    </h4>
+                                    <h4 v-show="app.accepted" class="text-success"><i class="fa fa-check-circle fa-lg fa-fw"></i>
+                                        <span>Congratulations, You've been Accepted to BoiseCodeWorks!</span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-challenges" v-if="activeView == 'code-challenges'">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <h3 class="heading text-center color-blue">
+                            <span class="pull-left btn btn-primary btn-circle" @click="activeView = 'next-steps'"><em class="fa fa-arrow-left"></em></span>Coding
+                            From Around The Web</h3>
+                        <p class="text-center text-muted"><small>"The web is full of excellent resources here are a few of our favorites"</small></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="https://www.khanacademy.org/images/khan-logo-vertical-transparent.png" width="80" class="media-box-object img-responsive"
+                                    src="https://www.khanacademy.org/images/khan-logo-vertical-transparent.png">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="https://www.khanacademy.org/computing/computer-programming/html-css" target="_blank"
+                                        href="https://www.khanacademy.org/computing/computer-programming/html-css">HTML &amp; CSS</a>
+                                </h4>Learn how to use HTML and CSS to make webpages. HTML is the markup language that you
+                                surround content with, to tell browsers about headings, lists, tables, etc. CSS is the stylesheet
+                                language that you style the page with, to tell browsers to change the color, font, layout,
+                                and more.</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="http://learn.shayhowe.com/assets/images/book/book-sm.png" width="80" class="media-box-object img-responsive"
+                                    src="http://learn.shayhowe.com/assets/images/book/book-sm.png">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="http://learn.shayhowe.com/html-css/" target="_blank" href="http://learn.shayhowe.com/html-css/">HTML5 &amp; CSS3</a>
+                                </h4>Learn to Code HTML &amp; CSS is a simple and comprehensive guide dedicated to helping
+                                beginners learn HTML and CSS. Outlining the fundamentals, this guide works through all common
+                                elements of front-end design and development.</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="https://d1ffx7ull4987f.cloudfront.net/images/achievements/large_badge/296/completed-javascript-road-trip-part-1-b9f5af5196fb596271f7f97b6b477d24.png"
+                                    width="80" class="media-box-object img-responsive" src="https://d1ffx7ull4987f.cloudfront.net/images/achievements/large_badge/296/completed-javascript-road-trip-part-1-b9f5af5196fb596271f7f97b6b477d24.png">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="https://www.codeschool.com/courses/javascript-road-trip-part-1" target="_blank"
+                                        href="https://www.codeschool.com/courses/javascript-road-trip-part-1">JavaScript RoadTrip Part 1</a>
+                                </h4>An introduction to the very basics of the JavaScript language. Build a foundation of
+                                JavaScript syntax and learn how to use values, variables, and files.</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="https://s3.amazonaws.com/codecademy-content/courses/ltp2/img/make-an-interactive-website.svg" width="80" class="media-box-object img-responsive"
+                                    src="https://s3.amazonaws.com/codecademy-content/courses/ltp2/img/make-an-interactive-website.svg">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="https://www.codecademy.com/skills/make-an-interactive-website" target="_blank"
+                                        href="https://www.codecademy.com/skills/make-an-interactive-website">Make an Interactive Website</a>
+                                </h4>Build the Flipboard home page and learn how to add interactivity to your website.</div>
+                        </div>
+                    </div>
+                    <h4>Optional Recommended Resources</h4>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="https://www.codingame.com/servlet/fileservlet?id=1520914418242" width="80" class="media-box-object img-responsive"
+                                    src="https://www.codingame.com/servlet/fileservlet?id=1520914418242">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="https://www.codingame.com/start" target="_blank" href="https://www.codingame.com/start">Coding Game</a>
+                                </h4>Become a Better Coder Improve Your Skills by Playing Games.</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="https://codecombat.com/images/pages/base/logo.png" width="80" class="media-box-object img-responsive" src="https://codecombat.com/images/pages/base/logo.png">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="https://codecombat.com/" target="_blank" href="https://codecombat.com/">Code Combat</a>
+                                </h4>CodeCombat is a platform for students to learn computer science while playing through
+                                a real game.</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div>
+                                <img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/324190/header.jpg?t=1450522538" width="80" class="media-box-object img-responsive"
+                                    src="http://cdn.akamai.steamstatic.com/steam/apps/324190/header.jpg?t=1450522538">
+                            </div>
+                            <div>
+                                <h4 class="media-box-heading"><a ng-href="http://store.steampowered.com/app/324190/" target="_blank" href="http://store.steampowered.com/app/324190/">Code Spells</a>
+                                </h4>Craft any magical spell you can imagine using the most powerful tool there is: code.
+                                CodeSpells is currently an unguided, sandbox experience for the bravest wizards who want
+                                to help the developers steer the game's development.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grit-test" v-if="activeView == 'grit-test'">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <h3 class="heading text-center color-blue">
+                            <span class="pull-left btn btn-primary btn-circle" @click="activeView = 'next-steps'"><em class="fa fa-arrow-left"></em></span>Prove
+                            Your Logic</h3>
+                        <p class="text-center text-muted"><small>Score at least a 70 to pass</small></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <div class="question" v-for="(question, i) in assessment.questions" :key="i">
+                            <div><strong>Question {{i + 1}}</strong></div>
+                            <div class="body">
+                                <div class="info" v-html="question.info"></div>
+                                <div class="question" v-html="question.question"></div>
+                            </div>
+                            <div class="answers">
+                                <div v-for="answer in question.answers">
+                                    <label class="control-label">
+                                        <input type="radio" :label="answer.answer" :name="question.id" :value="answer.score" v-model="test[question.id]">
+                                    <span class="fa fa-check"></span>{{answer.answer}}</label>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 col-sm-12">
+                        <button class="btn btn-u btn-blockk">Submit Assessment</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </section>
+    </article>
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
